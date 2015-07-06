@@ -24,6 +24,9 @@ DataViewer is an lightweight database utility written entirely in Java. Using th
 # Configuration
 Usually you don't need to set DataViewer, but you always can find config information in {user.home}/.dataviewer/ folder include database and normal setting etc.
 
+# Declaration
+This project is just for learning and researching, some components come from other open source project and internet.
+
 # ScreenCapture
 
 ## DataViewer UI
