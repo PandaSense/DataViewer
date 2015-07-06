@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: 1.6.0 (Oracle Corporation)
+Main-Class: com.dv.ui.DataViewer
+Class-Path:  autocomplete.jar db2jcc.jar  db2jcc_license_cisuz.jar fife.common.jar htmllexer.jar htmlparser.jar iText-2.1.7.jar iText-rtf-2.1.7.jar log4j-1.2.15.jar poi-3.2-FINAL-20081019.jar rsyntaxtextarea.jar swingx-1.6.1.jar commons-net-3.2.jar jide-oss-master.jar
