@@ -1,0 +1,288 @@
+/*
+ * DVExportView.java  2/6/13 1:04 PM
+ *
+ * Copyright (C) 2012-2013 Nick Ma
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+package com.dv.export;
+
+import com.dv.prop.DVPropMain;
+import com.dv.ui.component.DVFileChooser;
+import com.dv.ui.DVMainEditView;
+import com.dv.ui.action.SCTCAction;
+import com.dv.util.DVExcelIO;
+import com.dv.util.DataViewerUtilities;
+
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+/**
+ * @author Cypress
+ */
+public class DVExportView extends javax.swing.JDialog implements ActionListener {
+
+    private static final String MSG = "com.dv.export.DataviewerExportFile";
+    private static final ResourceBundle mainViewResource = ResourceBundle.getBundle(MSG);
+    private DVMainEditView dvew;
+    private String exportFileFullpath;
+    DVFileChooser fcd;
+
+    /**
+     * Creates new form DVExportView
+     */
+    public DVExportView(java.awt.Frame parent, DVMainEditView dvew) {
+        super(parent, true);
+        initComponents();
+        this.dvew = dvew;
+        buildAction();
+
+        setTitle(DVPropMain.DV_NAME + "-" + DVPropMain.DV_VERSION + "-" + mainViewResource.getString("FrameTitle"));
+
+        Point oh = parent.getLocationOnScreen();
+        setLocation((int) oh.getX() + parent.getWidth() / 2 - getWidth() / 2, (int) oh.getY() + parent.getHeight() / 2 - getHeight() / 2);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setVisible(true);
+    }
+
+    public void buildAction() {
+
+        fileSelect.addActionListener(this);
+        export.addActionListener(this);
+        close.addActionListener(this);
+        sctc.addActionListener(new SCTCAction(dvew));
+        sctc.setEnabled(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == close) {
+            this.dispose();
+        }
+        if (e.getSource() == fileSelect) {
+            fcd = new DVFileChooser(DataViewerUtilities.getExportFilePath());
+            int i = fcd.showOpenDialog(DVPropMain.DV_FRAME.get("MAIN"));
+            if (i == JFileChooser.APPROVE_OPTION) {
+                exportFileFullpath = fcd.getSelectedFile().getPath().trim() + fileTypeCombox.getSelectedItem().toString();
+                fileField.setText(exportFileFullpath);
+            }
+        }
+        if (e.getSource() == export) {
+            if (canBeExport()) {
+                if (!fileField.getText().trim().equals("")) {
+                    if (fileTypeCombox.getSelectedItem().toString().equals(".xls")) {
+                        exportIntoExcel();
+                    } else {
+                        showMessage("rtf report function has been removed");
+                    }
+                } else {
+                    showError(mainViewResource.getString("FileNameError"));
+                }
+            } else {
+                showError(mainViewResource.getString("NoResultError"));
+            }
+        }
+    }
+
+    public boolean canBeExport() {
+        if (dvew.getResultTextPane().getText().trim().equals("")) {
+
+            return false;
+        }
+        return true;
+    }
+
+    public void exportIntoExcel() {
+
+        if (!sheet.getText().trim().equals("")) {
+
+            boolean isOk = true;
+
+            if (dvew.IS_BATCH_RESULT) {
+                isOk = DVExcelIO.exportBatchResultIntoExcel(exportFileFullpath, sheet.getText().trim(), dvew.getBatchResultCol(), dvew.getBatchResultRow());
+
+            } else {
+                isOk = DVExcelIO.exportIntoExcel(exportFileFullpath, sheet.getText().trim(), dvew.getCol(), dvew.getRow());
+            }
+            if (isOk) {
+                showMessage(mainViewResource.getString("ExportFine"));
+            } else {
+                showError(mainViewResource.getString("ExportFailed"));
+            }
+        } else {
+            showError(mainViewResource.getString("SheetNameError"));
+        }
+    }
+
+    public void showError(String message) {
+
+        JOptionPane.showMessageDialog(this, message, "Export", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void showMessage(String message) {
+
+        JOptionPane.showMessageDialog(this, message, "Export", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+     * This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        fileField = new javax.swing.JTextField();
+        fileSelect = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        fileTypeCombox = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        sheet = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        export = new javax.swing.JButton();
+        close = new javax.swing.JButton();
+        message = new javax.swing.JLabel();
+        sctc = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Export Into File"));
+
+        jLabel1.setText("File :");
+
+        fileField.setText(" ");
+
+        fileSelect.setText("...");
+
+        jLabel2.setText("Type :");
+
+        fileTypeCombox.setModel(new javax.swing.DefaultComboBoxModel(new String[]{".xls", ".rtf"}));
+
+        jLabel3.setText("Sheet :");
+
+        sheet.setText(" ");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(fileTypeCombox, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(fileField, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(fileSelect))
+                                        .addComponent(sheet, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(fileSelect)
+                                        .addComponent(fileField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel1))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(sheet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3))
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(fileTypeCombox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        export.setText("Export");
+
+        close.setText("Close ");
+
+        message.setText(" ");
+
+        sctc.setText("SCTC ");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(message, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(sctc)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(export)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(close)
+                                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(message)
+                                .addComponent(export)
+                                .addComponent(close)
+                                .addComponent(sctc))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton close;
+    private javax.swing.JButton export;
+    private javax.swing.JTextField fileField;
+    private javax.swing.JButton fileSelect;
+    private javax.swing.JComboBox fileTypeCombox;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel message;
+    private javax.swing.JButton sctc;
+    private javax.swing.JTextField sheet;
+    // End of variables declaration//GEN-END:variables
+}
