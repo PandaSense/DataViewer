@@ -4,6 +4,7 @@ DataViewer is an operating system independent database utility written entirely 
 # Release History
   - DataViewer 1.0.0 release
   - DataViewer can be executed in most of OS include Windows, Linux, Mac
+
 # Requirements
   - JDK 1.7 for developing and compiling
   - JRE 1.7 or above for executing include Oracle or IBM
