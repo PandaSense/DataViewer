@@ -1,9 +1,8 @@
 # DataViewer
-DataViewer is an operating system independent database utility written entirely in Java. Using the flexibility provided by Java Database Connectivity (JDBC), DataViewer provides a simple way to interact with some databases include DB2, Oracle, MySQL, and Microsoft SQL SERVER from simple queries to table and updates table of an entire schema's data. And DataViewer keeps some customized functions to streamline operations for Testing Team includes Super Copying, Table Name Auto-Completed, SQL Result Exported, Auto-Updated etc.
+DataViewer is an operating system independent database utility written entirely in Java. Using the flexibility provided by Java Database Connectivity (JDBC), DataViewer provides a simple way to interact with some databases include DB2, Oracle, MySQL, and Microsoft SQL SERVER from simple queries to table and updates table of an entire schema's data. And DataViewer keeps some customized functions to streamline operations for Testing Team includes Super Copying, Table Name Auto-Completed, SQL Result Exported, Auto-Updated etc. DataViewer can be executed in most of OS include Windows, Linux, Mac
 
 # Release History
   - DataViewer 1.0.0 release
-  - DataViewer can be executed in most of OS include Windows, Linux, Mac
 
 # Requirements
   - JDK 1.7 for developing and compiling
