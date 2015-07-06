@@ -1,5 +1,5 @@
 # DataViewer
-DataViewer is an operating system independent database utility written entirely in Java. Using the flexibility provided by Java Database Connectivity (JDBC), DataViewer provides a simple way to interact with some databases include DB2, Oracle, MySQL, and Microsoft SQL SERVER from simple queries to table and updates table of an entire schema's data. And DataViewer keeps some customized functions to streamline operations for Testing Team includes Super Copying, Table Name Auto-Completed, SQL Result Exported, Auto-Updated etc. DataViewer can be executed in most of OS include Windows, Linux, Mac
+DataViewer is an lightweight database utility written entirely in Java. Using the flexibility provided by Java Database Connectivity (JDBC), DataViewer provides a simple way to interact with some databases include DB2, Oracle, MySQL, and Microsoft SQL SERVER from simple queries to table and updates table of an entire schema's data. And DataViewer keeps some customized functions to streamline operations for Testing Team includes Super Copying, Table Name Auto-Completed, SQL Result Exported, Auto-Updated etc. DataViewer can be executed in most of OS include Windows, Linux, Mac
 
 # Release History
   - DataViewer 1.0.0 release
@@ -22,7 +22,7 @@ DataViewer is an operating system independent database utility written entirely 
   10. Double click DataViewerLauncher.jar to load DataViewer for all of OS, and DataViewer.exe and DataViewer.bat belong for Windwows.
 
 # Configuration
-Usually you don't need to config DataViewer, you always can find config information in {user.home}/.dataviewer/ folder include database and normal setting etc.
+Usually you don't need to set DataViewer, but you always can find config information in {user.home}/.dataviewer/ folder include database and normal setting etc.
 
 # ScreenCapture
 
