@@ -26,7 +26,10 @@ Usually you don't need to set DataViewer, but you always can find config informa
 
 # ScreenCapture
 
+## DataViewer UI
 ![DataViewer UI](https://github.com/PandaSense/DataViewer/raw/master/screencapture/DataViewer_UI.png)
+## DataViewer Path
 ![DataViewer Path](https://github.com/PandaSense/DataViewer/raw/master/screencapture/DataViewer_path.png)
+## DataViewer Lib Path
 ![DataViewer Lib Path](https://github.com/PandaSense/DataViewer/raw/master/screencapture/DataViewer_lib.png)
 
